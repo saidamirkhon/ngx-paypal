@@ -8,7 +8,7 @@ export class ScriptService {
     ) {
     }
 
-    registerScript(url: string, globalVar: string, onReady: (globalVar: any) => void): void {
+    registerScript(url: string, globalVar: string, onReady: (globalVar: any) => void, onError: () => void): void {
         const existingGlobalVar = (window as any)[globalVar];
         if (existingGlobalVar) {
             // global variable is present = script was already loaded
@@ -27,6 +27,11 @@ export class ScriptService {
             this.zone.run(() => {
                 onReady((window as any)[globalVar]);
             });
+        };
+        scriptElem.onerror = () => {
+          this.zone.run(() => {
+            onError();
+          });
         };
         scriptElem.src = url;
         scriptElem.async = true;

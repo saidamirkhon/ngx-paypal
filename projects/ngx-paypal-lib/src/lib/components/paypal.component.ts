@@ -54,6 +54,7 @@ export class NgxPaypalComponent implements OnChanges, OnDestroy, AfterViewInit {
      * Emitted when paypal script is loaded
      */
     @Output() scriptLoaded = new EventEmitter<any>();
+    @Output() scriptLoadError = new EventEmitter<boolean>();
 
     /**
      * Id of the element where PayPal button will be rendered
@@ -172,7 +173,10 @@ export class NgxPaypalComponent implements OnChanges, OnDestroy, AfterViewInit {
         }, (paypal) => {
             this.scriptLoaded.next(paypal);
             initPayPal(paypal);
-        });
+        },
+          () => {
+            this.scriptLoadError.emit(true);
+          });
     }
 
     private generateElementId(): string {

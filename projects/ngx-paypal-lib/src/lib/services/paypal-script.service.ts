@@ -14,8 +14,8 @@ export class PayPalScriptService {
     ) {
     }
 
-    registerPayPalScript(config: IPayPalUrlConfig, onReady: (payPalApi: any) => void): void {
-        this.scriptService.registerScript(this.getUrlForConfig(config), this.paypalWindowName, onReady);
+    registerPayPalScript(config: IPayPalUrlConfig, onReady: (payPalApi: any) => void, onError: () => void): void {
+        this.scriptService.registerScript(this.getUrlForConfig(config), this.paypalWindowName, onReady, onError);
     }
 
     destroyPayPalScript(): void {
